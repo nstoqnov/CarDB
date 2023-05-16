@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,12 +19,15 @@ public class Trip {
     private String trip_to;
     private double distance;
 
-    public Trip(String name, String trip_from, String trip_to, double distance) {
+    private LocalDateTime date;
+
+    public Trip(String name, String trip_from, String trip_to, double distance, LocalDateTime date) {
         super();
         this.name = name;
         this.trip_from = trip_from;
         this.trip_to = trip_to;
         this.distance = distance;
+        this.date = date;
     }
 
     public Trip(){
@@ -50,6 +54,10 @@ public class Trip {
         this.distance = distance;
     }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public long getId() {
         return id;
     }
@@ -69,5 +77,8 @@ public class Trip {
 
     public double getDistance() {
         return distance;
+    }
+    public LocalDateTime getDate() {
+        return date;
     }
 }
