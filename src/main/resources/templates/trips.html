@@ -21,9 +21,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link " aria-current="page" href="/">Home</a>
-        <a class="nav-link active" href="/trips">Trips</a>
-        <a class="nav-link" href="/addtrip">Add a trip</a>
+        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+        <a class="nav-link" th:href="@{/trips}">Trips</a>
+        <a class="nav-link" th:href="@{/addtrip}">Add a trip</a>
+        <a sec:authorize="!isAuthenticated()" class="nav-link" th:href="@{/login}">Login</a>
+        <button sec:authorize="isAuthenticated()" th:href="@{/logout}" value="Logout"/>
       </div>
     </div>
   </div>
