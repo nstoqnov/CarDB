@@ -8,6 +8,7 @@
       <change afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Security/CustomUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/CarDBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/CarDBController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Models/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Models/Role.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Models/UserEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Security/SecurityConfig.java" afterDir="false" />
@@ -88,6 +89,17 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="edit/delete trips" />
