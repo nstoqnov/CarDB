@@ -23,6 +23,12 @@ public class CarDBController {
         ResponseEntity<List<Trip>> tripsResponse = ResponseEntity.ok(list);
         return  tripsResponse;
     }
+    @GetMapping("/trips/{entityId}")
+    public ResponseEntity<Trip> getTripById(@PathVariable long entityId){
+        Trip foundTrip = tripServiceObj.getTripById(entityId);
+        ResponseEntity<Trip> response = ResponseEntity.ok(foundTrip);
+        return response;
+    }
 
 //    @GetMapping("/addtrip")
 //    public String addTrip(){
