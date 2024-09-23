@@ -1,6 +1,6 @@
 package com.example.CarDB.Controllers;
 
-import com.example.CarDB.Models.User;
+import com.example.CarDB.Models.UserEntity;
 import com.example.CarDB.Services.UserService;
 import com.example.CarDB.dto.RegistrationDTO;
 import jakarta.validation.Valid;
@@ -33,11 +33,11 @@ public class AuthController {
     }
     @PostMapping("/register/save")
     public String register(@Valid @ModelAttribute("user")RegistrationDTO user, BindingResult result, Model model){
-        User existingUserEmail = userService.findByEmail(user.getEmail());
+        UserEntity existingUserEmail = userService.findByEmail(user.getEmail());
         if(existingUserEmail != null && existingUserEmail.getEmail() != null && !existingUserEmail.getEmail().isEmpty()){
             result.rejectValue("email","There is already a user with this email/username!");
         }
-        User existingUsername = userService.findByUsername(user.getUsername());
+        UserEntity existingUsername = userService.findByUsername(user.getUsername());
         if(existingUsername != null && existingUsername.getUsername() != null && !existingUsername.getUsername().isEmpty()){
             result.rejectValue("username","There is already a user with this email/username!");
         }
