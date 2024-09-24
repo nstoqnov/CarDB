@@ -18,11 +18,11 @@ public class TripService {
         return tRepo.findAll();
     }
 
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         tRepo.deleteById(id);
     }
 
-    public Trip getTripById(int id){
+    public Trip getTripById(Long id){
         return tRepo.findById(id).get();
     }
 }
