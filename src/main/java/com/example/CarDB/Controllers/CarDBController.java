@@ -41,12 +41,24 @@ public class CarDBController {
 //        List<Trip> list = tripServiceObj.getAllTrips();
 //        return new ModelAndView("trips","trip",list); }
 //
-//    @RequestMapping("/editTrip/{id}")
-//    public String editTrip(@PathVariable("id") int id,Model model) {
-//        Trip b=tripServiceObj.getTripById(id);
-//        model.addAttribute("trip",b);
-//        return "tripEdit";
-//    }
+    @PutMapping("/editTrip/{id}")
+    public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
+        Trip currentTrip = tripServiceObj.getTripById(id);
+        if(currentTrip != null){
+            Trip updatedTrip = new Trip();
+            updatedTrip.setId(currentTrip.getId());
+            updatedTrip.setName(requestedTrip.getName());
+            updatedTrip.setDate(requestedTrip.getDate());
+            updatedTrip.setDistance(requestedTrip.getDistance());
+            updatedTrip.setTrip_from(requestedTrip.getTrip_from());
+            updatedTrip.setTrip_to(requestedTrip.getTrip_to());
+            tripServiceObj.save(updatedTrip);
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
     @RequestMapping("/deleteTrip/{id}")
     public ResponseEntity deleteTrip(@PathVariable("id")Long id) {
         tripServiceObj.deleteById(id);
