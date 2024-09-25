@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="172d6445-dec3-4ca1-a72a-5f9a79232cec" name="Changes" comment="edit/delete trips">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/CarDBController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Controllers/CarDBController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Services/TripRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Services/TripRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Services/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/CarDB/Services/TripService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
