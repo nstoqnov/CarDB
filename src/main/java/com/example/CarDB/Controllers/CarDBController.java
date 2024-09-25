@@ -47,9 +47,9 @@ public class CarDBController {
 //        model.addAttribute("trip",b);
 //        return "tripEdit";
 //    }
-//    @RequestMapping("/deleteTrip/{id}")
-//    public String deleteTrip(@PathVariable("id")int id) {
-//        tripServiceObj.deleteById(id);
-//        return "redirect:/trips";
-//    }
+    @RequestMapping("/deleteTrip/{id}")
+    public ResponseEntity deleteTrip(@PathVariable("id")Long id) {
+        tripServiceObj.deleteById(id);
+        return ResponseEntity.ok(id);
+    }
 }
