@@ -1,6 +1,7 @@
 package com.example.CarDB.Controllers;
 
 import com.example.CarDB.Models.Trip;
+import com.example.CarDB.Services.TripRepo;
 import com.example.CarDB.Services.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,24 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CarDBController {
-
-    @Autowired
-    private TripService tripServiceObj;
+    private TripRepo tripRepo;
 
     @GetMapping("/trips")
-    public ResponseEntity<List<Trip>> trips(){
-        List<Trip> list = tripServiceObj.getAllTrips();
-        ResponseEntity<List<Trip>> tripsResponse = ResponseEntity.ok(list);
+    public ResponseEntity<Iterable<Trip>> trips(){
+        Iterable<Trip> list = tripRepo.findAll();
+        ResponseEntity<Iterable<Trip>> tripsResponse = ResponseEntity.ok(list);
         return  tripsResponse;
     }
     @GetMapping("/trips/{entityId}")
     public ResponseEntity<Trip> getTripById(@PathVariable long entityId){
-        Trip foundTrip = tripServiceObj.getTripById(entityId);
-        ResponseEntity<Trip> response = ResponseEntity.ok(foundTrip);
-        return response;
+        Optional<Trip> foundTrip = tripRepo.findById(entityId);
+        if(foundTrip.isPresent()){
+            return ResponseEntity.ok(foundTrip.get());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 //    @GetMapping("/addtrip")
@@ -43,16 +46,16 @@ public class CarDBController {
 //
     @PutMapping("/editTrip/{id}")
     public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
-        Trip currentTrip = tripServiceObj.getTripById(id);
-        if(currentTrip != null){
+        Optional<Trip> currentTrip = tripRepo.findById(id);
+        if(currentTrip.isPresent()){
             Trip updatedTrip = new Trip();
-            updatedTrip.setId(currentTrip.getId());
+            updatedTrip.setId(currentTrip.get().getId());
             updatedTrip.setName(requestedTrip.getName());
             updatedTrip.setDate(requestedTrip.getDate());
             updatedTrip.setDistance(requestedTrip.getDistance());
             updatedTrip.setTrip_from(requestedTrip.getTrip_from());
             updatedTrip.setTrip_to(requestedTrip.getTrip_to());
-            tripServiceObj.save(updatedTrip);
+            tripRepo.save(updatedTrip);
             return ResponseEntity.noContent().build();
         }else{
             return ResponseEntity.notFound().build();
@@ -61,7 +64,7 @@ public class CarDBController {
     
     @RequestMapping("/deleteTrip/{id}")
     public ResponseEntity deleteTrip(@PathVariable("id")Long id) {
-        tripServiceObj.deleteById(id);
+        tripRepo.deleteById(id);
         return ResponseEntity.ok(id);
     }
 }

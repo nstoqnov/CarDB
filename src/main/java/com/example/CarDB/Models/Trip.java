@@ -1,18 +1,14 @@
 package com.example.CarDB.Models;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Entity
+@Table("trip")
 public class Trip {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String name;
     private String trip_from;
