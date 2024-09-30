@@ -2,13 +2,12 @@ package com.example.CarDB.Controllers;
 
 import com.example.CarDB.Models.Trip;
 import com.example.CarDB.Services.TripRepo;
-import com.example.CarDB.Services.TripService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +17,9 @@ public class CarDBController {
     private TripRepo tripRepo;
 
     @GetMapping("/trips")
-    public ResponseEntity<Iterable<Trip>> trips(){
-        Iterable<Trip> list = tripRepo.findAll();
-        ResponseEntity<Iterable<Trip>> tripsResponse = ResponseEntity.ok(list);
-        return  tripsResponse;
+    public ResponseEntity<List<Trip>> trips(Pageable pageable){
+        Page<Trip> page = tripRepo.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSortOr(Sort.by(Sort.Direction.ASC, "date"))));
+        return ResponseEntity.ok(page.getContent());
     }
     @GetMapping("/trips/{entityId}")
     public ResponseEntity<Trip> getTripById(@PathVariable long entityId){
@@ -48,13 +46,7 @@ public class CarDBController {
     public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
         Optional<Trip> currentTrip = tripRepo.findById(id);
         if(currentTrip.isPresent()){
-            Trip updatedTrip = new Trip();
-            updatedTrip.setId(currentTrip.get().getId());
-            updatedTrip.setName(requestedTrip.getName());
-            updatedTrip.setDate(requestedTrip.getDate());
-            updatedTrip.setDistance(requestedTrip.getDistance());
-            updatedTrip.setTrip_from(requestedTrip.getTrip_from());
-            updatedTrip.setTrip_to(requestedTrip.getTrip_to());
+            Trip updatedTrip = new Trip(id, requestedTrip.name(), requestedTrip.trip_from(), requestedTrip.trip_to(), requestedTrip.distance(), requestedTrip.date(), requestedTrip.owner());
             tripRepo.save(updatedTrip);
             return ResponseEntity.noContent().build();
         }else{
