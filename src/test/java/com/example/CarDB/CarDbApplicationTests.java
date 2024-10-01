@@ -20,7 +20,7 @@ class CarDbApplicationTests {
 //	void contextLoads() {
 //	}
 	@Test
-	void shouldReturnAllCashCardsWhenListIsRequested() {
+	void shouldReturnAllTripsWhenListIsRequested() {
 		ResponseEntity<String> response = restTemplate.getForEntity("/trips", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -31,6 +31,15 @@ class CarDbApplicationTests {
 		JSONArray ids = documentContext.read("$..id");
 		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3,4,5,6,7,8,9,10);
 
+	}
+	@Test
+	void shouldReturnAPageOfTrips() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/trips?page=0&size=1", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		JSONArray page = documentContext.read("$[*]");
+		assertThat(page.size()).isEqualTo(1);
 	}
 
 }
