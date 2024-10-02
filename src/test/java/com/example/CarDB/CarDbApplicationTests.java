@@ -64,5 +64,22 @@ class CarDbApplicationTests {
 		int id3 = documentContext.read("$[2].id");
 		assertThat(id3).isEqualTo(8);
 	}
+	@Test
+	void shouldReturnATripWhenIdIsRequested() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/trips/1", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		int params = documentContext.read("$.length()");
+		assertThat(params).isEqualTo(7);
+
+		Number id = documentContext.read("$.id");
+		assertThat(id).isEqualTo(1);
+
+		String name = documentContext.read("$.name");
+		assertThat(name).isEqualTo("Mountain Adventure");
+
+
+	}
 
 }
