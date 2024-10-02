@@ -78,8 +78,12 @@ class CarDbApplicationTests {
 
 		String name = documentContext.read("$.name");
 		assertThat(name).isEqualTo("Mountain Adventure");
+	}
 
-
+	@Test
+	void shouldNotReturnATripWhenInvalidIdIsRequested() {
+		ResponseEntity<String> response = restTemplate.getForEntity("/trips/99", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
 }
