@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,17 +38,15 @@ public class CarDBController {
         }
     }
 
-//    @GetMapping("/addtrip")
-//    public String addTrip(){
-//        return "addtrip";
-//    }
-
-    //    @PostMapping("/save")
-//    public ModelAndView addTrip(@ModelAttribute Trip t){
-//        tripServiceObj.save(t);
-//        List<Trip> list = tripServiceObj.getAllTrips();
-//        return new ModelAndView("trips","trip",list); }
-//
+    @PostMapping("/trips")
+    private ResponseEntity<Void> createTrip(@RequestBody Trip newTripRequest, UriComponentsBuilder ucb) {
+        Trip savedTrip = tripRepo.save(newTripRequest);
+        URI locationOfTrip = ucb
+                .path("trips/{id}")
+                .buildAndExpand(savedTrip.id())
+                .toUri();
+        return ResponseEntity.created(locationOfTrip).build();
+    }
     @PutMapping("/editTrip/{id}")
     public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
         Optional<Trip> currentTrip = tripRepo.findById(id);
