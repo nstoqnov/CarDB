@@ -3,10 +3,12 @@ package com.example.CarDB.Controller;
 
 import com.example.CarDB.Model.Trip;
 import com.example.CarDB.Service.TripRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +20,8 @@ import java.util.Optional;
 
 @RestController
 public class CarDBController {
+    @Autowired
+    JdbcAggregateTemplate template;
     private final TripRepo tripRepo;
 
     public CarDBController(TripRepo tripRepo){
@@ -41,9 +45,9 @@ public class CarDBController {
 
     @PostMapping("/trips")
     private ResponseEntity<Void> createTrip(@RequestBody Trip newTripRequest, UriComponentsBuilder ucb) {
-        //Trip newTrip = new Trip(11L, newTripRequest.name(), newTripRequest.trip_from(), newTripRequest.trip_to(), newTripRequest.distance(),"Nick");
+        Trip newTrip = new Trip(11L, newTripRequest.getName(), newTripRequest.getTrip_from(), newTripRequest.getTrip_to(), newTripRequest.getDistance(),"Nick");
+        Trip savedTrip =template.insert(newTrip);
 
-        Trip savedTrip = tripRepo.save(newTripRequest);
         URI locationOfTrip = ucb
                 .path("trips/{id}")
                 .buildAndExpand(savedTrip.getId())
