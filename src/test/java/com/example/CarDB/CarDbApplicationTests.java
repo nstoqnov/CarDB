@@ -1,5 +1,6 @@
 package com.example.CarDB;
 
+import com.example.CarDB.Model.Trip;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import net.minidev.json.JSONArray;
+
+import java.net.URI;
+import java.time.LocalDateTime;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CarDbApplicationTests {
 
@@ -86,4 +91,21 @@ class CarDbApplicationTests {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
+//	@Test
+//	void shouldCreateATrip(){
+//		Trip newTrip = new Trip(null,"Trip to Sofia", "Plovdiv","Sofia",(double)150, LocalDateTime.now(),"Nick");
+//		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/trips/", newTrip, Void.class);
+//		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+//
+//		URI locationOfNewCashCard = createResponse.getHeaders().getLocation();
+//		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
+//		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+//
+//		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+//		Number id = documentContext.read("$.id");
+//		//get name ...
+//
+//		assertThat(id).isNotNull();
+//		//assert Name ...
+//	}
 }

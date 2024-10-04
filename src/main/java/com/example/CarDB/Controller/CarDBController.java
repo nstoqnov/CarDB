@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,10 +41,12 @@ public class CarDBController {
 
     @PostMapping("/trips")
     private ResponseEntity<Void> createTrip(@RequestBody Trip newTripRequest, UriComponentsBuilder ucb) {
+        //Trip newTrip = new Trip(11L, newTripRequest.name(), newTripRequest.trip_from(), newTripRequest.trip_to(), newTripRequest.distance(),"Nick");
+
         Trip savedTrip = tripRepo.save(newTripRequest);
         URI locationOfTrip = ucb
                 .path("trips/{id}")
-                .buildAndExpand(savedTrip.id())
+                .buildAndExpand(savedTrip.getId())
                 .toUri();
         return ResponseEntity.created(locationOfTrip).build();
     }
@@ -51,7 +54,7 @@ public class CarDBController {
     public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
         Optional<Trip> currentTrip = tripRepo.findById(id);
         if(currentTrip.isPresent()){
-            Trip updatedTrip = new Trip(id, requestedTrip.name(), requestedTrip.trip_from(), requestedTrip.trip_to(), requestedTrip.distance(), requestedTrip.date(), requestedTrip.owner());
+            Trip updatedTrip = new Trip(id, requestedTrip.getName(), requestedTrip.getTrip_from(), requestedTrip.getTrip_to(), requestedTrip.getDistance(), requestedTrip.getOwner());
             tripRepo.save(updatedTrip);
             return ResponseEntity.noContent().build();
         }else{
