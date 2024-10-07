@@ -3,7 +3,6 @@ package com.example.CarDB.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
 @Table("TRIPS")
 public class Trip {
     @Id

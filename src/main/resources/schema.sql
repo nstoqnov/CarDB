@@ -5,7 +5,6 @@ CREATE TABLE TRIPS
    trip_from VARCHAR(255) NOT NULL,
    trip_to VARCHAR(255) NOT NULL,
    distance DOUBLE PRECISION NOT NULL,
-   date TIMESTAMP,
    owner VARCHAR(255) NOT NULL,
    PRIMARY KEY (id)
 );
