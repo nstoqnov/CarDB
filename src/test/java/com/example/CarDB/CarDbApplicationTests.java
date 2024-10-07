@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import net.minidev.json.JSONArray;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CarDbApplicationTests {
@@ -31,10 +30,10 @@ class CarDbApplicationTests {
 
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		int cashCardCount = documentContext.read("$.length()");
-		assertThat(cashCardCount).isEqualTo(10);
+		assertThat(cashCardCount).isEqualTo(11);
 
 		JSONArray ids = documentContext.read("$..id");
-		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3,4,5,6,7,8,9,10);
+		assertThat(ids).containsExactlyInAnyOrder(1, 2, 3,4,5,6,7,8,9,10,11);
 
 	}
 	@Test
@@ -57,17 +56,17 @@ class CarDbApplicationTests {
 
 		//using all ids
 		JSONArray ids = documentContext.read("$..id");
-		assertThat(ids).containsExactlyInAnyOrder(10, 9 ,8);
+		assertThat(ids).containsExactlyInAnyOrder(11, 10 ,9);
 
 		//using array of ids
 		int id = documentContext.read("$[0].id");
-		assertThat(id).isEqualTo(10);
+		assertThat(id).isEqualTo(11);
 
 		int id2 = documentContext.read("$[1].id");
-		assertThat(id2).isEqualTo(9);
+		assertThat(id2).isEqualTo(10);
 
 		int id3 = documentContext.read("$[2].id");
-		assertThat(id3).isEqualTo(8);
+		assertThat(id3).isEqualTo(9);
 	}
 	@Test
 	void shouldReturnATripWhenIdIsRequested() {
@@ -76,7 +75,7 @@ class CarDbApplicationTests {
 
 		DocumentContext documentContext = JsonPath.parse(response.getBody());
 		int params = documentContext.read("$.length()");
-		assertThat(params).isEqualTo(7);
+		assertThat(params).isEqualTo(6);
 
 		Number id = documentContext.read("$.id");
 		assertThat(id).isEqualTo(1);
@@ -91,21 +90,21 @@ class CarDbApplicationTests {
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 
-//	@Test
-//	void shouldCreateATrip(){
-//		Trip newTrip = new Trip(null,"Trip to Sofia", "Plovdiv","Sofia",(double)150, LocalDateTime.now(),"Nick");
-//		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/trips/", newTrip, Void.class);
-//		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-//
-//		URI locationOfNewCashCard = createResponse.getHeaders().getLocation();
-//		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
-//		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-//
-//		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
-//		Number id = documentContext.read("$.id");
-//		//get name ...
-//
-//		assertThat(id).isNotNull();
-//		//assert Name ...
-//	}
+	@Test
+	void shouldCreateATrip(){
+		Trip newTrip = new Trip(11L,"Trip to Sofia", "Plovdiv","Sofia",(double)150,"Nick");
+		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/trips", newTrip, Void.class);
+		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+
+		URI locationOfNewCashCard = createResponse.getHeaders().getLocation();
+		ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewCashCard, String.class);
+		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
+		Number id = documentContext.read("$.id");
+		//get name ...
+
+		assertThat(id).isNotNull();
+		//assert Name ...
+	}
 }

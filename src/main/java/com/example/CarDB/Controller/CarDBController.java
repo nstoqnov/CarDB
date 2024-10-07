@@ -30,7 +30,7 @@ public class CarDBController {
 
     @GetMapping("/trips")
     public ResponseEntity<List<Trip>> trips(Pageable pageable){
-        Page<Trip> page = tripRepo.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSortOr(Sort.by(Sort.Direction.ASC, "date"))));
+        Page<Trip> page = tripRepo.findAll(PageRequest.of(pageable.getPageNumber(),pageable.getPageSize(),pageable.getSortOr(Sort.by(Sort.Direction.ASC, "id"))));
         return ResponseEntity.ok(page.getContent());
     }
     @GetMapping("/trips/{entityId}")
