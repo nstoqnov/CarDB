@@ -7,10 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import net.minidev.json.JSONArray;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
 
@@ -106,5 +109,26 @@ class CarDbApplicationTests {
 
 		assertThat(id).isNotNull();
 		//assert Name ...
+	}
+	@Test
+	@DirtiesContext
+	void shouldDeleteATrip(){
+		ResponseEntity<String> response = restTemplate.getForEntity("/trips", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContext = JsonPath.parse(response.getBody());
+		int tripCountResult = documentContext.read("$.length()");
+
+		ResponseEntity<String> DeleteResponse = restTemplate.exchange("/deleteTrip/1",HttpMethod.DELETE, HttpEntity.EMPTY,String.class);
+		assertThat(DeleteResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		ResponseEntity<String> responseExpected = restTemplate.getForEntity("/trips", String.class);
+		assertThat(responseExpected.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+		DocumentContext documentContextExp = JsonPath.parse(responseExpected.getBody());
+		int tripCountExpected = documentContextExp.read("$.length()");
+
+		assertThat(tripCountResult - 1).isEqualTo(tripCountExpected);
+
 	}
 }
