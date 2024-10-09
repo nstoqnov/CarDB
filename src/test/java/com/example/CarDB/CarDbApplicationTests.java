@@ -1,6 +1,7 @@
 package com.example.CarDB;
 
 import com.example.CarDB.Model.Trip;
+import com.example.CarDB.Model.User;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Test;
@@ -95,7 +96,7 @@ class CarDbApplicationTests {
 
 	@Test
 	void shouldCreateATrip(){
-		Trip newTrip = new Trip(11L,"Trip to Sofia", "Plovdiv","Sofia",(double)150,"Nick");
+		Trip newTrip = new Trip(11L,"Trip to Sofia", "Plovdiv","Sofia",(double)150,new User(1L,"Nick"));
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/trips", newTrip, Void.class);
 		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
