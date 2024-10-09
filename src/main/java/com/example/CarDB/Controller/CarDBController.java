@@ -54,7 +54,7 @@ public class CarDBController {
                 .toUri();
         return ResponseEntity.created(locationOfTrip).build();
     }
-    @PutMapping("/editTrip/{id}")
+    @PutMapping("/trips/{id}")
     public ResponseEntity editTrip(@PathVariable("id") Long id,@RequestBody Trip requestedTrip) {
         Optional<Trip> currentTrip = tripRepo.findById(id);
         if(currentTrip.isPresent()){
@@ -66,7 +66,7 @@ public class CarDBController {
         }
     }
 
-    @RequestMapping("/deleteTrip/{id}")
+    @RequestMapping("/trips/{id}")
     public ResponseEntity deleteTrip(@PathVariable("id")Long id) {
         tripRepo.deleteById(id);
         return ResponseEntity.ok(id);
