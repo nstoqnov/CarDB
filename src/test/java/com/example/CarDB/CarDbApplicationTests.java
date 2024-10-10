@@ -96,7 +96,7 @@ class CarDbApplicationTests {
 
 	@Test
 	void shouldCreateATrip(){
-		Trip newTrip = new Trip(11L,"Trip to Sofia", "Plovdiv","Sofia",(double)150,new User(1L,"Nick"));
+		Trip newTrip = new Trip(11L,"Trip to Sofia", "Plovdiv","Sofia",(double)150,1L);
 		ResponseEntity<Void> createResponse = restTemplate.postForEntity("/trips", newTrip, Void.class);
 		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 

@@ -11,12 +11,12 @@ public class Trip {
     private String trip_from;
     private String trip_to;
     private Double distance;
-    private User owner;
+    private Long owner;
 
     public Trip() {
     }
 
-    public Trip(Long id, String name, String trip_from, String trip_to, Double distance, User owner) {
+    public Trip(Long id, String name, String trip_from, String trip_to, Double distance, Long owner) {
         this.id = id;
         this.name = name;
         this.trip_from = trip_from;
@@ -65,11 +65,11 @@ public class Trip {
         this.distance = distance;
     }
 
-    public User getOwner() {
+    public Long getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(Long owner) {
         this.owner = owner;
     }
 

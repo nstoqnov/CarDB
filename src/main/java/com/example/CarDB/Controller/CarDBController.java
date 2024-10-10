@@ -2,6 +2,7 @@ package com.example.CarDB.Controller;
 
 
 import com.example.CarDB.Model.Trip;
+import com.example.CarDB.Model.User;
 import com.example.CarDB.Service.TripRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ public class CarDBController {
 
     @PostMapping("/trips")
     private ResponseEntity<Void> createTrip(@RequestBody Trip newTripRequest, UriComponentsBuilder ucb) {
-        Trip newTrip = new Trip(11L, newTripRequest.getName(), newTripRequest.getTrip_from(), newTripRequest.getTrip_to(), newTripRequest.getDistance(),"Nick");
+        Trip newTrip = new Trip(11L, newTripRequest.getName(), newTripRequest.getTrip_from(), newTripRequest.getTrip_to(), newTripRequest.getDistance(), newTripRequest.getOwner());
         Trip savedTrip =template.insert(newTrip);
 
         URI locationOfTrip = ucb
