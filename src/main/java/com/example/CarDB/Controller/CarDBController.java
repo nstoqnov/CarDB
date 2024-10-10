@@ -46,7 +46,7 @@ public class CarDBController {
 
     @PostMapping("/trips")
     private ResponseEntity<Void> createTrip(@RequestBody Trip newTripRequest, UriComponentsBuilder ucb) {
-        Trip newTrip = new Trip(11L, newTripRequest.getName(), newTripRequest.getTrip_from(), newTripRequest.getTrip_to(), newTripRequest.getDistance(),new User(1L,"Nick"));
+        Trip newTrip = new Trip(11L, newTripRequest.getName(), newTripRequest.getTrip_from(), newTripRequest.getTrip_to(), newTripRequest.getDistance(), newTripRequest.getOwner());
         Trip savedTrip =template.insert(newTrip);
 
         URI locationOfTrip = ucb
