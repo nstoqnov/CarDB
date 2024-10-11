@@ -8,9 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -25,6 +27,16 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(Pageable pageable){
         Page<User> users = userRepo.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()));
         return ResponseEntity.ok(users.getContent());
+    }
+
+    @GetMapping("users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId){
+        Optional<User> foundUser = userRepo.findById(userId);
+        if(foundUser.isPresent()){
+            return ResponseEntity.ok(foundUser.get());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
