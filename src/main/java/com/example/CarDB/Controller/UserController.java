@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,17 @@ public class UserController {
                 .buildAndExpand(userSaved.getId())
                 .toUri();
         return ResponseEntity.created(locationOfNewUser).build();
+    }
+
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<User> editUserById(@PathVariable Long userId, @RequestBody User requestedUser){
+        Optional<User> foundUser = userRepo.findById(userId);
+        if(foundUser.isPresent()){
+            User updatedUser = template.update(requestedUser);
+            return ResponseEntity.ok(updatedUser);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
