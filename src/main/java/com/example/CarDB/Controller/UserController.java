@@ -64,4 +64,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping("/users/{userId}")
+    public ResponseEntity<User> deleteUserById(@PathVariable Long userId){
+        Optional<User> isPresentUser = userRepo.findById(userId);
+        if(isPresentUser.isPresent()){
+            userRepo.deleteById(userId);
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
