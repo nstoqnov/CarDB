@@ -69,7 +69,14 @@ public class CarDBController {
 
     @RequestMapping("/trips/{id}")
     public ResponseEntity deleteTrip(@PathVariable("id")Long id) {
-        tripRepo.deleteById(id);
-        return ResponseEntity.ok(id);
+        Optional<Trip> isPresentTrip = tripRepo.findById(id);
+        if(isPresentTrip.isPresent()){
+            tripRepo.deleteById(id);
+            return ResponseEntity.ok(id);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
+
 }
