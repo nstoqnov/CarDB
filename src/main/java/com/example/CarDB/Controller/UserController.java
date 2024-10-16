@@ -2,20 +2,24 @@ package com.example.CarDB.Controller;
 
 import com.example.CarDB.Model.User;
 import com.example.CarDB.Service.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class UserController {
+    @Autowired
+    JdbcAggregateTemplate template;
 
     private final UserRepo userRepo;
 
@@ -29,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(users.getContent());
     }
 
-    @GetMapping("users/{userId}")
+    @GetMapping("/users/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId){
         Optional<User> foundUser = userRepo.findById(userId);
         if(foundUser.isPresent()){
@@ -37,6 +41,15 @@ public class UserController {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createNewUser(@RequestBody User requestUser, UriComponentsBuilder uriComponentsBuilder){
+        User userSaved = template.insert(requestUser);
+        URI locationOfNewUser = uriComponentsBuilder.path("/users/{id}")
+                .buildAndExpand(userSaved.getId())
+                .toUri();
+        return ResponseEntity.created(locationOfNewUser).build();
     }
 
 }
