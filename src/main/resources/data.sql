@@ -28,5 +28,5 @@ INSERT INTO TRIPS (id, name, trip_from, trip_to, distance, owner) VALUES
 INSERT INTO TRIPS (id, name, trip_from, trip_to, distance, owner) VALUES
 (10, 'Ski Weekend', 'Denver', 'Vail', 120.7, 1);
 
-INSERT INTO USERS (id, name) VALUES
+INSERT INTO USERS (id, name, role) VALUES
 (1, 'Nick', 'ADMIN');
