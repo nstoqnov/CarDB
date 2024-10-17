@@ -7,14 +7,25 @@ import org.springframework.data.relational.core.mapping.Table;
 public class User {
     @Id
     private Long id;
+    private String name;
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
     }
 
-    public User(Long id, String name) {
+    public User(Long id, String name, String role) {
         this.id = id;
         this.name = name;
+        this.role = role;
     }
 
     public User() {
@@ -32,5 +43,5 @@ public class User {
         this.name = name;
     }
 
-    private String name;
+
 }
