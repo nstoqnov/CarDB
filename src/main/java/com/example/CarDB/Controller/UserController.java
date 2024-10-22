@@ -1,6 +1,8 @@
 package com.example.CarDB.Controller;
 
+import com.example.CarDB.Model.Authority;
 import com.example.CarDB.Model.User;
+import com.example.CarDB.Service.AuthorityRepo;
 import com.example.CarDB.Service.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,9 +25,11 @@ public class UserController {
     JdbcAggregateTemplate template;
 
     private final UserRepo userRepo;
+    private final AuthorityRepo authorityRepo;
 
-    public UserController(UserRepo userRepo) {
+    public UserController(UserRepo userRepo, AuthorityRepo authorityRepo) {
         this.userRepo = userRepo;
+        this.authorityRepo = authorityRepo;
     }
 
     @GetMapping("/users")
@@ -47,6 +51,8 @@ public class UserController {
     @PostMapping("/users")
     public ResponseEntity<User> createNewUser(@RequestBody User requestUser, UriComponentsBuilder uriComponentsBuilder){
         User userSaved = template.insert(requestUser);
+        Authority newAuthority = new Authority(userSaved.getUsername(),"ROLE_ADMIN");
+        template.insert(newAuthority);
         URI locationOfNewUser = uriComponentsBuilder.path("/users/{id}")
                 .buildAndExpand(userSaved.getId())
                 .toUri();
