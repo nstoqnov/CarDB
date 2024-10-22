@@ -28,3 +28,7 @@ INSERT INTO TRIPS (id, name, trip_from, trip_to, distance, owner) VALUES
 INSERT INTO TRIPS (id, name, trip_from, trip_to, distance, owner) VALUES
 (10, 'Ski Weekend', 'Denver', 'Vail', 120.7, 1);
 
+INSERT INTO USERS(ID, USERNAME, PASSWORD, ROLE, ENABLED) VALUES
+(3, 'nick', '{bcrypt}$2a$12$TdCgJity8OnwWi0Tm3kxJeJHLKR0eQWTI40FCYho8.ovXXLtNHV7C', null, true);
+INSERT INTO AUTHORITIES(USERNAME, AUTHORITY) VALUES ('nick', 'ROLE_ADMIN');
+
