@@ -48,7 +48,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users")
+    @PostMapping("/register")
     public ResponseEntity<User> createNewUser(@RequestBody User requestUser, UriComponentsBuilder uriComponentsBuilder){
         User userSaved = template.insert(requestUser);
         Authority newAuthority = new Authority(userSaved.getUsername(),"ROLE_ADMIN");
