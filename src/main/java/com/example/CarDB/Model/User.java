@@ -2,6 +2,7 @@ package com.example.CarDB.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Table("USERS")
 public class User {
@@ -26,7 +27,9 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        String encodedPassword = new BCryptPasswordEncoder().encode(password);
+
+        this.password = "{bcrypt}" + encodedPassword;
     }
 
     public String getRole() {
@@ -45,7 +48,8 @@ public class User {
         this.id = id;
         this.username = username;
         this.role = role;
-        this.password = password;
+        String encodedPass = new BCryptPasswordEncoder().encode(password);
+        this.password = "{bcrypt}" + encodedPass;
         this.enabled = enabled;
     }
 
