@@ -11,11 +11,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.swing.text.html.Option;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,9 +52,13 @@ public class UserController {
         }
     }
 
-    @PostMapping("/users")
+    @PostMapping("/register")
     public ResponseEntity<User> createNewUser(@RequestBody User requestUser, UriComponentsBuilder uriComponentsBuilder){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Authority> authorities = new List<>(authentication.getAuthorities());
         User userSaved = template.insert(requestUser);
+
         Authority newAuthority = new Authority(userSaved.getUsername(),"ROLE_ADMIN");
         template.insert(newAuthority);
         URI locationOfNewUser = uriComponentsBuilder.path("/users/{id}")
