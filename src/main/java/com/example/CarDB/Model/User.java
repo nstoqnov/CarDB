@@ -11,8 +11,15 @@ public class User {
     private String username;
     private String role;
     private String password;
-
+    private String email;
     private boolean enabled;
+
+    public String getEmail(){
+        return email;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
 
     public boolean isEnabled() {
         return enabled;
@@ -44,12 +51,13 @@ public class User {
         return id;
     }
 
-    public User(Long id, String username, String role, String password, boolean enabled) {
+    public User(Long id, String username, String role, String password,String email, boolean enabled) {
         this.id = id;
         this.username = username;
         this.role = role;
         String encodedPass = new BCryptPasswordEncoder().encode(password);
         this.password = "{bcrypt}" + encodedPass;
+        this.email = email;
         this.enabled = enabled;
     }
 

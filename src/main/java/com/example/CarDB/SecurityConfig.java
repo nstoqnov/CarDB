@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/**")
                         .hasRole("ADMIN"))
                 .authorizeHttpRequests(request -> request.requestMatchers("/trips/**").hasRole("USER"))
+                .authorizeHttpRequests(request -> request.requestMatchers("/register").permitAll())
                 .authorizeHttpRequests(request->request.requestMatchers("/h2-console/**").permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable());
