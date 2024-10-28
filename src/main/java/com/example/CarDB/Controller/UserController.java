@@ -56,7 +56,7 @@ public class UserController {
     public ResponseEntity<User> createNewUser(@RequestBody User requestUser, UriComponentsBuilder uriComponentsBuilder){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<Authority> authorities = new List<>(authentication.getAuthorities());
+        //List<Authority> authorities = new List<>(authentication.getAuthorities());
         User userSaved = template.insert(requestUser);
 
         Authority newAuthority = new Authority(userSaved.getUsername(),"ROLE_ADMIN");
