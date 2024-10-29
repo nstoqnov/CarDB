@@ -1,5 +1,6 @@
 package com.example.CarDB;
 
+
 import com.example.CarDB.Service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,6 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
+    }
+
+    public JwtAuthenticationFilter() {
+        this.jwtService = new JwtService();
+        this.handlerExceptionResolver = null;
+        this.userDetailsService = null;
     }
 
     @Override
