@@ -8,7 +8,7 @@ The project provides a RESTful API to manage trips, allowing you to create, view
 ## API Endpoints
 
 Here are the available endpoints:
-
+### Trips
 - **GET** `/trips`  
   Returns all trips in the database.
 
@@ -22,5 +22,18 @@ Here are the available endpoints:
   Deletes a trip by its ID.
 
 ---
+### Users
+_Note: All requests below requires admin rights._
+- **GET** `/users`  
+  Returns all users in the database.
 
+- **POST** `/users`  
+  Creates a new user.
+
+- **GET** `/users/{id}`  
+  Retrieves a specific user by its ID.
+
+- **DELETE** `/users/{id}`  
+  Deletes a user by its ID.
+  
 Each endpoint follows standard HTTP methods and returns JSON-formatted responses.
