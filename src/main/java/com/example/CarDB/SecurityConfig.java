@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -43,9 +44,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request.requestMatchers("/register").permitAll())
                 .authorizeHttpRequests(request->request.requestMatchers("/h2-console/**").permitAll())
                 .httpBasic(Customizer.withDefaults())
+                .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable());
         return http.build();
     }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.csrf(csrf->csrf.disable())
+//                .authorizeHttpRequests(request -> request.requestMatchers("/**").authenticated())
+//                .httpBasic(Customizer.withDefaults())
+//                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//        return http.build();
+//    }
     @Bean
     WebSecurityCustomizer ignoringCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/h2-console/**");
